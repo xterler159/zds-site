@@ -79,6 +79,11 @@ def association(request):
     return render(request, "pages/association.html")
 
 
+def accessibility(request):
+    """Display accessibility page"""
+    return render(request, "pages/accessibility.html")
+
+
 class ContactView(ListView):
     """
     Display contact page.
