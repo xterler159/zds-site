@@ -1,0 +1,28 @@
+services:
+  database:
+    image: mysql:latest
+    container_name: "zds-mysql"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_USER=zds
+      - MYSQL_PASSWORD=zds
+      - MYSQL_DATABASE=zdsdb
+    volumes:
+      - ./data:/var/lib/mysql
+
+  search-engine:
+    image: typesense/typesense:27.0
+    container_name: "zds-search-engine"
+    ports:
+      - "8108:8108"
+    command: '--data-dir /tmp --api-key=xyz --enable-cors'
+
+  app:
+    build:
+      context: .
+      dockerfile: dev/Dockerfile
+    container_name: "zds"
+    ports:
+      - "8000:8000"
